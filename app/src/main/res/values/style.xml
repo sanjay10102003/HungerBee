@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ToolbarTitle" parent="@style/Base.TextAppearance.AppCompat.Title">
+        <item name="android:textSize">40sp</item>
+        <item name="fontFamily">@font/merienda_one</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+</resources>

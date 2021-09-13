@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_layout_colour"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:nestedScrollingEnabled="true">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/merienda_one"
+                android:text="HungerBee"
+                android:textColor="@color/black"
+                android:textSize="45sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!--<EditText
+                    android:id="@+id/edtMainSearch"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/custom_search_bar"
+                    android:drawableLeft="@android:drawable/ic_menu_search"
+                    android:drawablePadding="10dp"
+                    android:hint="Search"
+                    android:inputType="textShortMessage"
+                    android:paddingLeft="10dp" />-->
+                <TextView
+                    android:id="@+id/txtMainSearch"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/custom_search_bar"
+                    android:drawablePadding="10dp"
+                    android:text="Search"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="10dp"
+                    app:drawableStartCompat="@android:drawable/ic_menu_search"
+                    tools:ignore="TextViewEdits" />
+
+                <ImageView
+                    android:id="@+id/profileimg"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="13dp"
+                    android:src="@drawable/profileimg" />
+
+                <ImageView
+                    android:id="@+id/ImgCart"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/cart_two" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#7C7C7B" />
+
+        <TextView
+            android:id="@+id/txtNoRestaurantFound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:text="No restaurants found near you"
+            android:textColor="@color/black"
+            android:fontFamily="@font/merienda_one"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="true">
+
+            <LinearLayout
+                android:id="@+id/dashboardLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Categories"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecyclerView_dashboard_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/txtViewMoreCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:text="View more..."
+                        android:textColor="#094EFF" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="All Restaurants"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecyclerView_dashboard_AllFoods"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="true"/>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

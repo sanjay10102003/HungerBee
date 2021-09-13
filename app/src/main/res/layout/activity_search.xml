@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <SearchView
+        android:id="@+id/edtSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/custom_edittext"
+        android:searchHintIcon="@android:drawable/ic_menu_search"
+        android:queryHint="Search Restaurant..."
+        android:iconifiedByDefault="false"
+        android:searchIcon="@android:drawable/ic_menu_search"
+        android:inputType="textShortMessage"
+        android:focusedByDefault="true"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchRecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

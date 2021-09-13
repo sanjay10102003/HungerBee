@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "601239276146",
+    "project_id": "hunger-bee",
+    "storage_bucket": "hunger-bee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601239276146:android:630b3faba3ee4ed75090eb",
+        "android_client_info": {
+          "package_name": "com.food.hungerbee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601239276146-qdml5rto3kblh7ujr8oui17hi2adia6j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6uJjLuMvDje-dw4YZvS10AXya9JTUqUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601239276146-qdml5rto3kblh7ujr8oui17hi2adia6j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

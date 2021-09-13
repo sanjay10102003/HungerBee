@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapsActivity">
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/map"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:id="@+id/txtlat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="--"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/txtlng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/txtlat"
+            android:text="--"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"/>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btngetLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/relativeLayout"
+        android:text="getLocation" />
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btngetLocation"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:text="Confirm Location"
+        android:textSize="20sp" />
+
+</RelativeLayout>
