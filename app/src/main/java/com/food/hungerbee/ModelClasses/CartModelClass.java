@@ -1,7 +1,7 @@
 package com.food.hungerbee.ModelClasses;
 
 public class CartModelClass {
-    String FoodName,FoodPrice,FoodId,FoodQuantity,UserId;
+    String FoodName,FoodPrice,FoodId,FoodQuantity="0",UserId;
 
     public CartModelClass() {
     }
@@ -13,6 +13,7 @@ public class CartModelClass {
         this.FoodQuantity = FoodQuantity;
         this.UserId = UserId;
     }
+
 
     public String getUserId() {
         return UserId;
@@ -52,5 +53,16 @@ public class CartModelClass {
 
     public void setFoodQuantity(String foodQuantity) {
         this.FoodQuantity = foodQuantity;
+    }
+
+    @Override
+    public String toString() {
+        return "CartModelClass{" +
+                "FoodName='" + FoodName + '\'' +
+                ", FoodPrice='" + FoodPrice + '\'' +
+                ", FoodId='" + FoodId + '\'' +
+                ", FoodQuantity='" + FoodQuantity + '\'' +
+                ", UserId='" + UserId + '\'' +
+                '}';
     }
 }

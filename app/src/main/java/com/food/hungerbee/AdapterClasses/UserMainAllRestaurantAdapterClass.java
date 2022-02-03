@@ -7,15 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.food.hungerbee.ModelClasses.RestaurantModelClass;
 import com.food.hungerbee.R;
-import com.food.hungerbee.UserFoodActivity;
-
+import com.food.hungerbee.UserRestaurantActivity;
 import java.util.ArrayList;
 
 
@@ -67,11 +64,12 @@ public class UserMainAllRestaurantAdapterClass extends RecyclerView.Adapter<User
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            Intent intent = new Intent(mContext, UserFoodActivity.class);
+            Intent intent = new Intent(mContext, UserRestaurantActivity.class);
             intent.putExtra("PhoneNumber", RestaurantList.get(position).getPhoneNumber());
             intent.putExtra("RestaurantName",RestaurantList.get(position).getName());
             intent.putExtra("RestaurantAddress",RestaurantList.get(position).getAddress());
             intent.putExtra("RestaurantImg",RestaurantList.get(position).getProfile());
+            intent.putExtra("RestaurantDistance",RestaurantList.get(position).getDistance());
 
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);

@@ -1,9 +1,9 @@
 package com.food.hungerbee.ModelClasses;
 
 public class LatLngModelClass {
-    Double lat,lng;
+    String  lat,lng;
 
-    public LatLngModelClass(Double lat, Double lng) {
+    public LatLngModelClass(String lat, String lng) {
         this.lat = lat;
         this.lng = lng;
     }
@@ -11,19 +11,19 @@ public class LatLngModelClass {
     public LatLngModelClass() {
     }
 
-    public Double getLat() {
+    public String getLat() {
         return lat;
     }
 
-    public void setLat(Double lat) {
+    public void setLat(String lat) {
         this.lat = lat;
     }
 
-    public Double getLng() {
+    public String getLng() {
         return lng;
     }
 
-    public void setLng(Double lng) {
+    public void setLng(String lng) {
         this.lng = lng;
     }
 }

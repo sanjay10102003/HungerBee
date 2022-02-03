@@ -4,6 +4,12 @@
         <item name="android:textSize">40sp</item>
         <item name="fontFamily">@font/merienda_one</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!--
+                <item name="android:statusBarColor">#00000000</item>
+        -->
     </style>
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
+
 </resources>

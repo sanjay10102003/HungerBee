@@ -3,20 +3,13 @@ package com.food.hungerbee;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.SearchView;
-
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.food.hungerbee.AdapterClasses.SearchRecyclerAdapter;
-import com.food.hungerbee.AdapterClasses.UserMainAllRestaurantAdapterClass;
 import com.food.hungerbee.ModelClasses.RestaurantModelClass;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
     SearchView searchView;
@@ -58,10 +51,10 @@ public class SearchActivity extends AppCompatActivity {
         FirebaseRecyclerOptions<RestaurantModelClass> firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<RestaurantModelClass>()
                 .setQuery(FirebaseDatabase.getInstance().getReference("Admin").orderByChild("name").startAt(string.toUpperCase())/*.endAt(string.toUpperCase()+"/uf8ff")*/.endAt(string.toUpperCase()+"~"),RestaurantModelClass.class)
                 .build();
+
         searchRecyclerAdapter = new SearchRecyclerAdapter(firebaseRecyclerOptions, getApplicationContext());
         searchRecyclerAdapter.startListening();
         searchRecyclerview.setAdapter(searchRecyclerAdapter);
-
     }
 
     @Override

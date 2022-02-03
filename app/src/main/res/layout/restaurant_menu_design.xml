@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="140dp"
     android:layout_margin="10dp"
@@ -11,17 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <TextView
             android:id="@+id/txtMenuFoodName"
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="15dp"
             android:maxLines="2"
-            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -40,69 +40,86 @@
                 android:id="@+id/txtMenuFoodPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:text="--"
                 android:textSize="15sp" />
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"
+            android:paddingBottom="5dp">
 
-        <ImageView
-            android:id="@+id/ImgMenuFood"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginLeft="10dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:scaleType="fitXY"
-            android:layout_toRightOf="@+id/txtMenuFoodName"
-            android:src="@drawable/no_image_icon" />
+            app:cardCornerRadius="5dp">
 
-        <RelativeLayout
+            <ImageView
+                android:id="@+id/ImgMenuFood"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/no_image_icon" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_marginTop="90dp"
-            android:layout_toRightOf="@+id/txtMenuFoodName">
-
-            <TextView
-                android:id="@+id/FoodAdd"
+            android:layout_alignParentBottom="true"
+            app:cardCornerRadius="5dp">
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="+add"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:background="@color/toolbarcolor"
-                android:visibility="visible" />
-
-            <LinearLayout
-                android:id="@+id/nextAdd"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:visibility="invisible">
-
-                <ImageView
-                    android:id="@+id/ImgFoodRemove"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/img_decrease" />
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/txtNumberOfItems"
-                    android:layout_width="51dp"
+                    android:id="@+id/FoodAdd"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/reddishcolor"
                     android:gravity="center"
-                    android:text="1"
+                    android:text="+add"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:background="@color/toolbarcolor"/>
+                    android:visibility="visible" />
 
-                <ImageView
-                    android:id="@+id/ImgFoodAdd"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/nextAdd"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/img_add" />
-            </LinearLayout>
-        </RelativeLayout>
+                    android:orientation="horizontal"
+                    android:visibility="invisible">
 
+                    <ImageView
+                        android:id="@+id/ImgFoodRemove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/img_decrease"
+                        android:background="#F1F1F1"/>
 
+                    <TextView
+                        android:id="@+id/txtNumberOfItems"
+                        android:layout_width="51dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/reddishcolor"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/ImgFoodAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/img_add"
+                        android:background="#F1F1F1"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

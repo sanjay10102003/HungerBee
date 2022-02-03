@@ -9,25 +9,29 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logocircular"
         android:supportsRtl="true"
         android:theme="@style/Theme.HungerBee">
-        <activity android:name=".AdminDashboardActivity">
-        </activity>
+        <activity android:name=".HeadSettingActivity"></activity>
+        <activity android:name=".AdminOrderHistoryActivity" />
+        <activity android:name=".HeadDashboardActivity" />
+        <activity android:name=".HeadRestaurantDetails" />
+        <activity android:name=".AdminDashboardActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".UserCartActivity" />
-        <activity android:name=".HeadActivity" />
-        <activity android:name=".UserFoodActivity" />
+        <activity android:name=".HeadAccessChangingActivity" />
+        <activity android:name=".UserRestaurantActivity" />
         <activity android:name=".MapsActivity" />
         <activity android:name=".UserFullCategoryList" />
         <activity android:name=".AdminFoodUploadActivity" />
-        <activity android:name=".AdminMainActivity" >
-        </activity>
+        <activity android:name=".AdminOurFoodsActivity" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +42,6 @@
         <activity android:name=".FirstTimeProfileActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".UserProfile" />
-        <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
 
         <meta-data

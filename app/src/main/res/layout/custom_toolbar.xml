@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="120dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@color/toolbarcolor"
     android:elevation="5dp"
-    android:paddingTop="10dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    android:fitsSystemWindows="true">
 
-    <!--<TextView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_arrow_back"
+        app:tint="@color/black" />
+
+    <TextView
         android:id="@+id/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toRightOf="@+id/imgBack"
         android:fontFamily="@font/merienda_one"
+        android:text="HungerBee"
         android:textColor="@color/black"
-        android:textSize="45sp"
-        android:textStyle="bold" />-->
-
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_centerVertical="true"/>
+    </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>

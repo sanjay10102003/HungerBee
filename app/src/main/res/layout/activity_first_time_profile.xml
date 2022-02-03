@@ -4,51 +4,107 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstTimeProfileActivity">
+    tools:context=".FirstTimeProfileActivity"
+    android:background="@color/background"
+    android:padding="20dp">
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/merienda_one"
+        android:shadowRadius="15"
+        android:layout_marginTop="90dp"
+        android:text="HungerBee"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="60sp" />
+    <TextView
+        android:id="@+id/txtProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220dp"
+        android:text="Profile"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:visibility="visible"/>
+<GridLayout
+    android:id="@+id/GridLayoutProfile"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/txtProfile"
+    android:columnCount="2">
+    <TextView
+        android:id="@+id/txtUserPhoneNumberProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:text="PhoneNumber"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="visible"/>
+    <TextView
+        android:id="@+id/txtUserPhoneNoProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:textSize="18sp"
+        android:visibility="visible"/>
+    <TextView
+        android:id="@+id/txtUserNameProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="visible"/>
+    <EditText
+        android:id="@+id/edtUserNameProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/custom_edittext"
+        android:ems="10"
+        android:textSize="18sp"
+        android:hint="Enter your name"
+        android:inputType="text"
+        android:visibility="visible"/>
 
-
-        <EditText
-            android:id="@+id/edtPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Name"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:inputType="text"/>
-        <EditText
-            android:id="@+id/edtUserNameRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Name"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:inputType="text"/>
-        <EditText
-            android:id="@+id/edtUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="UserName"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:inputType="text" />
-
-        <Button
-            android:id="@+id/btnUserRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="150dp"/>
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/txtUserAddressProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:text="Address"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="visible"/>
+    <EditText
+        android:id="@+id/edtUserAddressProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/custom_edittext"
+        android:ems="10"
+        android:textSize="18sp"
+        android:hint="Enter your name"
+        android:inputType="textMultiLine"
+        android:visibility="visible"/>
+</GridLayout>
+    <Button
+        android:id="@+id/btnProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/GridLayoutProfile"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/custom_button"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/white"
+        android:text="Submit"/>
 
 
 </RelativeLayout>

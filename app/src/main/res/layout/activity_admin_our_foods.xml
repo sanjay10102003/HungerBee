@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".AdminMainActivity">
+    tools:context=".AdminOurFoodsActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -17,15 +17,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--<include
-            android:id="@+id/AdminToolbarMain"
-            layout="@layout/custom_toolbar" />-->
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title="Our Foods"
-            app:titleTextColor="@color/black"
-            app:titleTextAppearance="@style/ToolbarTitle"/>
+        <include
+            android:id="@+id/headToolbar"
+            layout="@layout/custom_toolbar" />
 
         <TextView
             android:id="@+id/txtLogout"

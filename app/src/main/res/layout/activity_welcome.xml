@@ -7,34 +7,73 @@
     android:background="@color/welcomebackgroundcolor"
     tools:context=".WelcomeActivity">
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:orientation="vertical">-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/merienda_one"
-            android:shadowColor="@color/black"
-            android:shadowRadius="15"
-            android:text="HungerBee"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="60sp" />
+    <TextView
+        android:id="@+id/txtHungerBee"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:fontFamily="@font/merienda_one"
+        android:shadowColor="@color/black"
+        android:shadowRadius="10"
+        android:text="HungerBee"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="60sp" />
+    <TextView
+        android:id="@+id/txtSlogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/txtHungerBee"
+        android:textSize="18sp"
+        android:text="We care for your precious time"
+        android:textColor="@color/black"
+        android:textStyle="italic"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/bee"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="80dp"/>
-        </RelativeLayout>
-    </LinearLayout>
+
+
+    <!--</LinearLayout>-->
+
+    <ImageView
+        android:id="@+id/imgBee"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/txtSlogan"
+        android:layout_marginEnd="86dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/bee" />
+
+    <TextView
+        android:id="@+id/txtConnection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:text="Please check your network connection"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txtRetry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:text="Retry"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:drawableLeftCompat="@drawable/ic_refresh" />
+
 </RelativeLayout>

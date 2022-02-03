@@ -3,7 +3,6 @@ package com.food.hungerbee;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -18,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.food.hungerbee.ModelClasses.FoodModelClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,17 +33,29 @@ public class AdminFoodUploadActivity extends AppCompatActivity {
     private static final String[] CategoryList = {"","Pizza","Burger","shawarma","Fresh Juice"};
     Button btnUploadItem;
     EditText edtItemName,edtItemPrice;
-    ImageView imgItem;
+    ImageView imgItem,imgBack;
     public Uri imageUri;
     String StringimageUrl;
     DatabaseReference AdmindatabaseReference,databaseReferenceUsers;
     StorageReference storageReference;
+    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_food_upload);
         Spinners();
+
+        title = findViewById(R.id.Title);
+        title.setText("Our Foods");
+        imgBack = findViewById(R.id.imgBack);
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         AdmindatabaseReference = FirebaseDatabase.getInstance().getReference("Admin");
         databaseReferenceUsers = FirebaseDatabase.getInstance().getReference("Users");
@@ -117,7 +127,7 @@ public class AdminFoodUploadActivity extends AppCompatActivity {
                                 AdmindatabaseReference.child(UserIdString).child("Foods").child(ItemId).setValue(foodModelClass);
                                 Toast.makeText(AdminFoodUploadActivity.this, "Uploaded Successfully...", Toast.LENGTH_SHORT).show();
                                 pd.dismiss();
-                                Intent intent = new Intent(getApplicationContext(),AdminMainActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), AdminOurFoodsActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }

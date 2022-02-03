@@ -5,32 +5,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.food.hungerbee.BillingClass;
 import com.food.hungerbee.ModelClasses.CartModelClass;
-import com.food.hungerbee.ModelClasses.FoodModelClass;
 import com.food.hungerbee.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
+import com.food.hungerbee.UserCartActivity;
 import java.util.ArrayList;
 
 public class CartAdapterClass extends RecyclerView.Adapter<CartAdapterClass.CartViewHolder> {
     ArrayList<CartModelClass> cartList;
     Context mContext;
+    UserCartActivity cart;
 
-    public CartAdapterClass(ArrayList<CartModelClass> cartList, Context mContext) {
+    public CartAdapterClass(ArrayList<CartModelClass> cartList, Context mContext, UserCartActivity cart) {
         this.cartList = cartList;
         this.mContext = mContext;
+        this.cart = cart;
     }
 
     @Override
@@ -46,26 +38,75 @@ public class CartAdapterClass extends RecyclerView.Adapter<CartAdapterClass.Cart
         /*Glide.with(mContext).load(cartModelClass.getImageURL()).into(holder.ImgFood);*/
         holder.FoodName.setText(cartModelClass.getFoodName());
         holder.FoodPrice.setText(cartModelClass.getFoodPrice());
-        DatabaseReference databaseReference;
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(holder.CurrentUser).child("CartItems");
-        databaseReference.child(cartList.get(position).getUserId()).child(cartList.get(position).getFoodId()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+        holder.ImgCartFoodAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    int foodQuantity;
-                    foodQuantity = Integer.valueOf(snapshot.child("foodQuantity").getValue(String.class));
-                    if (foodQuantity>=1){
-                        holder.txtNumberOfItems.setText(String.valueOf(foodQuantity));
-                    }else {
-                        databaseReference.child(cartList.get(position).getUserId().toString()).child(cartList.get(position).getFoodId()).removeValue();
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(mContext, "Error: "+error, Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                int intFoodQuantity;
+                BillingClass billingClass;
+                intFoodQuantity = Integer.parseInt(cartModelClass.getFoodQuantity());
+                intFoodQuantity += 1;
+                holder.txtNumberOfItems.setText(String.valueOf(intFoodQuantity));
+                cartModelClass.setFoodQuantity(String.valueOf(intFoodQuantity));
+                UserCartActivity.cartList.set(position, cartModelClass);
+                billingClass = new BillingClass(cartList, UserCartActivity.currentRestaurantDistance);
+                cart.strfoodAmountvalue = billingClass.Amount();
+                cart.strChargesvalue = billingClass.Charges();
+                cart.strTotalAmountvalue = billingClass.TotalAmount();
+                cart.txtfoodAmountvalue.setText(cart.strfoodAmountvalue + "+");
+                cart.txtChargesvalue.setText(cart.strChargesvalue + "+");
+                cart.txtTotalAmountvalue.setText("Rs." + cart.strTotalAmountvalue + "/-");
             }
         });
+
+        holder.ImgCartFoodRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int intFoodQuantity;
+                BillingClass billingClass;
+                intFoodQuantity = Integer.parseInt(cartModelClass.getFoodQuantity());
+                intFoodQuantity -= 1;
+                if (intFoodQuantity >= 1) {
+                    holder.txtNumberOfItems.setText(String.valueOf(intFoodQuantity));
+                    cartModelClass.setFoodQuantity(String.valueOf(intFoodQuantity));
+                    UserCartActivity.cartList.set(position, cartModelClass);
+                } else {
+                    UserCartActivity.cartList.remove(cartModelClass);
+                    if (UserCartActivity.cartList.isEmpty()) {
+                        UserCartActivity.currentRestaurantName = null;
+                        UserCartActivity.currentRestaurantAddress = null;
+                        UserCartActivity.currentRestaurantDistance=null;
+                        UserCartActivity.currentRestaurantId=null;
+                        UserCartActivity.currentRestaurantImg=null;
+                        UserCartActivity.cartLinearLayout.setVisibility(View.GONE);
+                        UserCartActivity.cartEmptyLinearLayout.setVisibility(View.VISIBLE);
+
+                    }
+                    CartAdapterClass cartAdapterClass;
+                    cartAdapterClass = CartAdapterClass.this;
+                    cartAdapterClass.notifyDataSetChanged();
+                }
+                billingClass = new BillingClass(cartList, UserCartActivity.currentRestaurantDistance);
+                cart.strfoodAmountvalue = billingClass.Amount();
+                cart.strChargesvalue = billingClass.Charges();
+                cart.strTotalAmountvalue = billingClass.TotalAmount();
+                cart.txtfoodAmountvalue.setText(cart.strfoodAmountvalue + "+");
+                cart.txtChargesvalue.setText(cart.strChargesvalue + "+");
+                cart.txtTotalAmountvalue.setText("Rs." + cart.strTotalAmountvalue + "/-");
+            }
+        });
+
+        String pos = cartList.get(position).getFoodId();
+        for (CartModelClass cartModelClass1 : UserCartActivity.cartList) {
+            if (cartModelClass1.getFoodId().equals(pos)) {
+                int foodQuantity;
+                foodQuantity = Integer.parseInt(cartModelClass1.getFoodQuantity());
+                if (foodQuantity >= 1) {
+                    holder.txtNumberOfItems.setText(String.valueOf(foodQuantity));
+                }
+            }
+        }
     }
 
     @Override
@@ -73,13 +114,9 @@ public class CartAdapterClass extends RecyclerView.Adapter<CartAdapterClass.Cart
         return cartList.size();
     }
 
-    public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        DatabaseReference databaseReference;
-        String CurrentUser;
+    public class CartViewHolder extends RecyclerView.ViewHolder {
         ImageView ImgCartFoodAdd, ImgCartFoodRemove;
         TextView FoodName, FoodPrice, txtNumberOfItems;
-        LinearLayout nextAdd;
-        int FoodQuantity = 1;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,54 +127,125 @@ public class CartAdapterClass extends RecyclerView.Adapter<CartAdapterClass.Cart
             ImgCartFoodAdd = itemView.findViewById(R.id.ImgCartFoodAdd);
             ImgCartFoodRemove = itemView.findViewById(R.id.ImgCartFoodRemove);
             txtNumberOfItems = itemView.findViewById(R.id.txtCartNumberOfItems);
-            CurrentUser = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
-            databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(CurrentUser).child("CartItems");
-            ImgCartFoodAdd.setOnClickListener(this);
-            ImgCartFoodRemove.setOnClickListener(this);
         }
+    }
+}
 
-        @Override
+
+
+       /* @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
             CartModelClass cartModelClass = cartList.get(position);
+            int intFoodQuantity;
+            BillingClass billingClass;
             switch (v.getId()) {
                 case (R.id.ImgCartFoodAdd):
-                    databaseReference.child(cartModelClass.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    intFoodQuantity = Integer.parseInt(cartModelClass.getFoodQuantity());
+                    intFoodQuantity += 1;
+                    txtNumberOfItems.setText(String.valueOf(intFoodQuantity));
+                    cartModelClass.setFoodQuantity(String.valueOf(intFoodQuantity));
+                    UserCartActivity.cartList.set(position, cartModelClass);
+                    billingClass = new BillingClass(cartList, UserCartActivity.currentRestaurantDistance);
+                    cart.strfoodAmountvalue = billingClass.Amount();
+                    cart.strChargesvalue = billingClass.Charges();
+                    cart.strTotalAmountvalue = billingClass.TotalAmount();
+                    cart.txtfoodAmountvalue.setText(cart.strfoodAmountvalue + "+");
+                    cart.txtChargesvalue.setText(cart.strChargesvalue + "+");
+                    cart.txtTotalAmountvalue.setText("Rs." + cart.strTotalAmountvalue + "/-");
+                    break;*/
+                    /*databaseReference.child(cartModelClass.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.hasChild(cartModelClass.getFoodId())) {
-                                int intFoodQuantity = Integer.parseInt(snapshot.child(cartModelClass.getFoodId()).child("foodQuantity").getValue(String.class));
+                                int intFoodQuantity;
+                                intFoodQuantity = Integer.parseInt(snapshot.child(cartModelClass.getFoodId()).child("foodQuantity").getValue(String.class));
                                 intFoodQuantity += 1;
                                 txtNumberOfItems.setText(String.valueOf(intFoodQuantity));
                                 databaseReference.child(cartList.get(position).getUserId().toString()).child(cartList.get(position).getFoodId()).child("foodQuantity").setValue(String.valueOf(intFoodQuantity));
+
+                                cartList.get(position).setFoodQuantity(String.valueOf(intFoodQuantity));
+                                *//*int amount = 0;
+                                int NumberOfFoods=cartList.size();
+                                for(int i=0; i<NumberOfFoods;i++){
+                                    amount = amount +Integer.parseInt(cartList.get(position).getFoodQuantity())*Integer.parseInt(cartList.get(position).getFoodPrice());
+                                }*//*
+                                BillingClass billingClass = new BillingClass(cartList);
+                                cart.strfoodAmountvalue = billingClass.Amount();
+                                cart.strChargesvalue = billingClass.Charges();
+                                cart.strTotalAmountvalue = billingClass.TotalAmount();
+                                cart.txtfoodAmountvalue.setText(cart.strfoodAmountvalue+"+");
+                                cart.txtChargesvalue.setText(cart.strChargesvalue+"+");
+                                cart.txtTotalAmountvalue.setText("Rs."+cart.strTotalAmountvalue);
                             }
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Toast.makeText(mContext, "Error: " + error, Toast.LENGTH_SHORT).show();
                         }
-                    });
-                    break;
-                case (R.id.ImgCartFoodRemove):
-                    databaseReference.child(cartModelClass.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    });*/
+                /*case (R.id.ImgCartFoodRemove):
+                    intFoodQuantity = Integer.parseInt(cartModelClass.getFoodQuantity());
+                    intFoodQuantity -= 1;
+                    if (intFoodQuantity >= 1) {
+                        txtNumberOfItems.setText(String.valueOf(intFoodQuantity));
+                        cartModelClass.setFoodQuantity(String.valueOf(intFoodQuantity));
+                        UserCartActivity.cartList.set(position, cartModelClass);
+                    } else {
+                        UserCartActivity.cartList.remove(cartModelClass);
+                        if (UserCartActivity.cartList.isEmpty()) {
+                            UserCartActivity.currentRestaurantName = null;
+                            UserCartActivity.currentRestaurantAddress = null;
+                            UserCartActivity.cartLinearLayout.setVisibility(View.GONE);
+                            UserCartActivity.cartEmptyLinearLayout.setVisibility(View.VISIBLE);
+
+                        }
+                        CartAdapterClass cartAdapterClass;
+                        cartAdapterClass = CartAdapterClass.this;
+                        cartAdapterClass.notifyDataSetChanged();
+                    }
+                    billingClass = new BillingClass(cartList, UserCartActivity.currentRestaurantDistance);
+                    cart.strfoodAmountvalue = billingClass.Amount();
+                    cart.strChargesvalue = billingClass.Charges();
+                    cart.strTotalAmountvalue = billingClass.TotalAmount();
+                    cart.txtfoodAmountvalue.setText(cart.strfoodAmountvalue + "+");
+                    cart.txtChargesvalue.setText(cart.strChargesvalue + "+");
+                    cart.txtTotalAmountvalue.setText("Rs." + cart.strTotalAmountvalue + "/-");
+                    break;*/
+                    /*databaseReference.child(cartModelClass.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.hasChild(cartModelClass.getFoodId())) {
-/*
+*//*
                                 txtNumberOfItems.setText(String.valueOf(snapshot.child(foodModelClass.getItemId()).child("foodQuantity").getValue(String.class)));
-*/
+*//*
                                 int intFoodQuantity = Integer.parseInt(snapshot.child(cartModelClass.getFoodId()).child("foodQuantity").getValue(String.class));
                                 intFoodQuantity -= 1;
                                 if (intFoodQuantity>=1){
                                     txtNumberOfItems.setText(String.valueOf(intFoodQuantity));
                                     databaseReference.child(cartList.get(position).getUserId().toString()).child(cartList.get(position).getFoodId()).child("foodQuantity").setValue(String.valueOf(intFoodQuantity));
+                                    cartList.get(position).setFoodQuantity(String.valueOf(intFoodQuantity));
+                                    BillingClass billingClass = new BillingClass(cartList);
+                                    cart.strfoodAmountvalue = billingClass.Amount();
+                                    cart.strChargesvalue = billingClass.Charges();
+                                    cart.strTotalAmountvalue = billingClass.TotalAmount();
+                                    cart.txtfoodAmountvalue.setText(cart.strfoodAmountvalue+"+");
+                                    cart.txtChargesvalue.setText(cart.strChargesvalue+"+");
+                                    cart.txtTotalAmountvalue.setText("Rs."+cart.strTotalAmountvalue+"/-");
 
                                 }else {
-                                    databaseReference.child(cartList.get(position).getUserId().toString()).child(cartList.get(position).getFoodId()).removeValue()/*child("foodQuantity").setValue(String.valueOf(intFoodQuantity))*/;
+                                    databaseReference.child(cartList.get(position).getUserId().toString()).child(cartList.get(position).getFoodId()).removeValue()*//*child("foodQuantity").setValue(String.valueOf(intFoodQuantity))*//*;
                                     cartList.remove(position);
                                     CartAdapterClass cartAdapterClass;
                                     cartAdapterClass = CartAdapterClass.this;
                                     cartAdapterClass.notifyDataSetChanged();
+                                    BillingClass billingClass = new BillingClass(cartList);
+                                    cart.strfoodAmountvalue = billingClass.Amount();
+                                    cart.strChargesvalue = billingClass.Charges();
+                                    cart.strTotalAmountvalue = billingClass.TotalAmount();
+                                    cart.txtfoodAmountvalue.setText(cart.strfoodAmountvalue+"+");
+                                    cart.txtChargesvalue.setText(cart.strChargesvalue+"+");
+                                    cart.txtTotalAmountvalue.setText("Rs."+cart.strTotalAmountvalue+"/-");
                                 }
                             }
                         }
@@ -146,9 +254,5 @@ public class CartAdapterClass extends RecyclerView.Adapter<CartAdapterClass.Cart
                         public void onCancelled(@NonNull DatabaseError error) {
                             Toast.makeText(mContext, "Error: " + error, Toast.LENGTH_SHORT).show();
                         }
-                    });
-                    break;
-            }
-        }
-    }
-}
+                    });*/
+

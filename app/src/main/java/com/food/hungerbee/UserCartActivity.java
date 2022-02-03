@@ -1,42 +1,33 @@
 package com.food.hungerbee;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.food.hungerbee.AdapterClasses.CartAdapterClass;
-import com.food.hungerbee.AdapterClasses.MenuFoodAdapterClass;
 import com.food.hungerbee.ModelClasses.CartModelClass;
-import com.food.hungerbee.ModelClasses.FoodModelClass;
-import com.food.hungerbee.ModelClasses.RestaurantModelClass;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
 public class UserCartActivity extends AppCompatActivity {
-    Toolbar mToolbar;
     RecyclerView CartRecyclerView;
     ImageView RestaurantImg;
-    TextView txtRestaurantName,txtRestaurantAddress;
-    ArrayList<CartModelClass> cartList;
-    FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference,RestaurantDatabase;
-    String phoneNumber;
+    TextView txtRestaurantName,txtRestaurantAddress,title;
+    public static ArrayList<CartModelClass> cartList = new ArrayList<CartModelClass>();
+    ImageView imgBack;
+    public TextView txtfoodAmountvalue,txtChargesvalue,txtTotalAmountvalue;
+    public String strfoodAmountvalue,strChargesvalue,strTotalAmountvalue;
+    Button btnPlaceOrder;
+    public static String currentRestaurantName =null,currentRestaurantAddress=null,currentRestaurantId=null,currentRestaurantImg=null,currentRestaurantDistance=null;
+    @SuppressLint("StaticFieldLeak")
+    public static LinearLayout cartLinearLayout,cartEmptyLinearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,18 +36,61 @@ public class UserCartActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mToolbar.setTitle("Cart");*/
 
+        title = findViewById(R.id.Title);
+        title.setText("Cart");
+        imgBack = findViewById(R.id.imgBack);
+
+        cartLinearLayout = findViewById(R.id.cartLinearLayout);
+        cartEmptyLinearLayout = findViewById(R.id.cartEmptyLinearLayout);
+
         RestaurantImg = findViewById(R.id.RestaurantImg);
         txtRestaurantName = findViewById(R.id.txtRestaurantName);
         txtRestaurantAddress = findViewById(R.id.txtRestaurantAddress);
+        btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
+
+        txtfoodAmountvalue = findViewById(R.id.txtfoodAmountvalue);
+        txtChargesvalue = findViewById(R.id.txtChargesvalue);
+        txtTotalAmountvalue = findViewById(R.id.txtTotalAmountvalue);
+
+        if(currentRestaurantName != null){
+            txtRestaurantName.setText(currentRestaurantName);
+        }if(currentRestaurantAddress!=null){
+            txtRestaurantAddress.setText(currentRestaurantAddress);
+        }if(currentRestaurantImg!=null){
+            try{
+                Glide.with(getApplicationContext()).load(currentRestaurantImg).into(RestaurantImg);
+            }catch (Exception e){
+                RestaurantImg.setImageResource(R.drawable.no_image_icon);
+            }
+        }
 
         CartRecyclerView = findViewById(R.id.CartRecyclerView);
         CartRecyclerView.setHasFixedSize(true);
         CartRecyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
-        cartList = new ArrayList<CartModelClass>();
-        CartAdapterClass cartAdapterClass = new CartAdapterClass(cartList,getApplicationContext());
+        CartAdapterClass cartAdapterClass = new CartAdapterClass(cartList,getApplicationContext(),UserCartActivity.this);
         CartRecyclerView.setAdapter(cartAdapterClass);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        BillingClass billingClass = new BillingClass(cartList,currentRestaurantDistance);
+        strfoodAmountvalue = billingClass.Amount();
+        strChargesvalue = billingClass.Charges();
+        strTotalAmountvalue = billingClass.TotalAmount();
+        txtfoodAmountvalue.setText(strfoodAmountvalue+"+");
+        txtChargesvalue.setText(strChargesvalue+"+");
+        txtTotalAmountvalue.setText("Rs."+strTotalAmountvalue+"/-");
+
+        if(cartList.isEmpty()){
+            cartLinearLayout.setVisibility(View.GONE);
+            cartEmptyLinearLayout.setVisibility(View.VISIBLE);
+        }
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        /*firebaseAuth = FirebaseAuth.getInstance();
         phoneNumber = firebaseAuth.getCurrentUser().getPhoneNumber();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         RestaurantDatabase = FirebaseDatabase.getInstance().getReference("Admin");
@@ -87,6 +121,13 @@ public class UserCartActivity extends AppCompatActivity {
                             cartList.add(cartModelClass);
                             cartAdapterClass.notifyDataSetChanged();
                         }
+                        BillingClass billingClass = new BillingClass(cartList);
+                        strfoodAmountvalue = billingClass.Amount();
+                        strChargesvalue = billingClass.Charges();
+                        strTotalAmountvalue = billingClass.TotalAmount();
+                        txtfoodAmountvalue.setText(strfoodAmountvalue+"+");
+                        txtChargesvalue.setText(strChargesvalue+"+");
+                        txtTotalAmountvalue.setText("Rs."+strTotalAmountvalue+"/-");
                     }
                 }
             }
@@ -95,6 +136,7 @@ public class UserCartActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(UserCartActivity.this, "Error: "+error, Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
+
 }

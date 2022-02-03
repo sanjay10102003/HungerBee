@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:title="logout"
-        android:id="@+id/AdminMenuLogout"/>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/MenuProfile"
+            android:icon="@drawable/ic_profile"
+            android:title="Profile" />
+        <item
+            android:id="@+id/MenuSettings"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+        <item
+            android:id="@+id/MenuLogout"
+            android:icon="@drawable/ic_logout"
+            android:title="LogOut" />
+    </group>
 </menu>

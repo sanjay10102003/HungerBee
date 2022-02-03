@@ -7,16 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.food.hungerbee.ModelClasses.RestaurantModelClass;
 import com.food.hungerbee.R;
-import com.food.hungerbee.UserFoodActivity;
+import com.food.hungerbee.UserRestaurantActivity;
 
 public class SearchRecyclerAdapter extends FirebaseRecyclerAdapter<RestaurantModelClass, SearchRecyclerAdapter.SearchViewholder> {
 
@@ -26,7 +24,7 @@ public class SearchRecyclerAdapter extends FirebaseRecyclerAdapter<RestaurantMod
      *
      * @param options
      */
-    static Context mContext;
+    Context mContext;
     public SearchRecyclerAdapter(@NonNull FirebaseRecyclerOptions<RestaurantModelClass> options ,Context context) {
         super(options);
         mContext = context;
@@ -37,11 +35,10 @@ public class SearchRecyclerAdapter extends FirebaseRecyclerAdapter<RestaurantMod
         holder.RestaurantName.setText(model.getName());
         holder.RestaurantAddress.setText(model.getAddress());
         Glide.with(holder.RestaurantImg.getContext()).load(model.getProfile()).into(holder.RestaurantImg);
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, UserFoodActivity.class);
+                Intent intent = new Intent(mContext, UserRestaurantActivity.class);
                 intent.putExtra("PhoneNumber", model.getPhoneNumber());
                 intent.putExtra("RestaurantName",model.getName());
                 intent.putExtra("RestaurantAddress",model.getAddress());

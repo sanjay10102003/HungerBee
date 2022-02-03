@@ -10,8 +10,10 @@
     <color name="transparent">#00FFFFFF</color>
     <!--<color name="background">#FFEFCE</color>-->
     <color name="background">#FFFFF3E0</color>
-    <color name="toolbarcolor">#FF6C6C</color>
+    <color name="toolbarcolor">#FFE3B5</color>
+    <color name="reddishcolor">#FD5959</color>
     <color name="welcomebackgroundcolor">#FFE91A</color>
     <color name="AdminMainlistColor">#BEF1FDF8</color>
     <color name="main_layout_colour">#FFF4D7</color>
+    <color name="ashColour">#7C7C7B</color>
 </resources>

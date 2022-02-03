@@ -19,7 +19,8 @@
         android:iconifiedByDefault="false"
         android:searchIcon="@android:drawable/ic_menu_search"
         android:inputType="textShortMessage"
-        android:focusedByDefault="true"/>
+        android:focusedByDefault="true"
+        android:focusable="true"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRecyclerview"
         android:layout_width="match_parent"

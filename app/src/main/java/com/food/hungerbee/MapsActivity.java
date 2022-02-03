@@ -4,22 +4,15 @@ package com.food.hungerbee;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.food.hungerbee.ModelClasses.LatLngModelClass;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,18 +20,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.food.hungerbee.databinding.ActivityMapsBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    GoogleMap mMap;
     private ActivityMapsBinding binding;
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
@@ -46,13 +36,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Button btnConfirm,btngetLocation;
     TextView txtlat,txtlng;
     String lat,lng;
-    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("");
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -60,12 +47,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        supportMapFragment.getMapAsync(this);
-
+        if (supportMapFragment != null) {
+            supportMapFragment.getMapAsync(this);
+        }
         btnConfirm = findViewById(R.id.btnConfirm);
         btngetLocation = findViewById(R.id.btngetLocation);
         txtlat = findViewById(R.id.txtlat);
         txtlng = findViewById(R.id.txtlng);
+
+
 
         client = LocationServices.getFusedLocationProviderClient(this);
         btngetLocation.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 if(lat!=null && lng!=null) {
-                    Intent intent = new Intent(getApplicationContext(), HeadActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), HeadAccessChangingActivity.class);
                     intent.putExtra("StrLat",lat);
                     intent.putExtra("StrLng",lng);
                     startActivity(intent);
@@ -131,6 +121,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+
+            @Override
+            public void onMapClick(LatLng latLng) {
+                // Creating a marker
+                MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("I'm here!");
+                // Clears the previously touched position
+                mMap.clear();
+                // Animating to the touched position
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                // Placing a marker on the touched position
+                mMap.addMarker(markerOptions);
+                lat = String.valueOf(latLng.latitude);
+                lng = String.valueOf(latLng.longitude);
+                txtlat.setText(String.valueOf(latLng.latitude));
+                txtlng.setText(String.valueOf(latLng.longitude));
+            }
+        });
     }
 
     @Override
@@ -142,4 +151,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
+
 }

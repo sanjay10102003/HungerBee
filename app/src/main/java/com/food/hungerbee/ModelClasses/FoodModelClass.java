@@ -2,6 +2,7 @@ package com.food.hungerbee.ModelClasses;
 
 public class FoodModelClass {
     String imageUrl,ItemId,ItemName,ItemPrice,Category,UserId;
+
     public FoodModelClass() {
     }
 
@@ -60,5 +61,17 @@ public class FoodModelClass {
 
     public void setUserId(String userId) {
         UserId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "FoodModelClass{" +
+                "imageUrl='" + imageUrl + '\'' +
+                ", ItemId='" + ItemId + '\'' +
+                ", ItemName='" + ItemName + '\'' +
+                ", ItemPrice='" + ItemPrice + '\'' +
+                ", Category='" + Category + '\'' +
+                ", UserId='" + UserId + '\'' +
+                '}';
     }
 }

@@ -2,21 +2,18 @@ package com.food.hungerbee;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.location.Address;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.food.hungerbee.ModelClasses.LatLngModelClass;
 import com.food.hungerbee.ModelClasses.RestaurantModelClass;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,25 +22,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.HashSet;
-
-public class HeadActivity extends AppCompatActivity {
+public class HeadAccessChangingActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    Button btnlogout,btnAccessSubmit;
+    Button btnAccessSubmit;
     DatabaseReference databaseReference,AdmindatabaseReference;
     EditText edtPhoneNumber;
-    TextView txtLatlng;
+    TextView txtLatlng,title;
     Spinner AccessSpinner,CountryCodeSpinner;
     private static final String[] AccessList = {"","user","admin","head"};
     String[] CountryCodeList = {"","+91"};
     String lat,lng;
+    ImageView imgBack;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_head);
+        setContentView(R.layout.activity_head_access_changing);
+
+        title = findViewById(R.id.Title);
+        title.setText("Restaurant Access");
+        imgBack = findViewById(R.id.imgBack);
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         AdmindatabaseReference = FirebaseDatabase.getInstance().getReference("Admin");
@@ -60,23 +60,12 @@ public class HeadActivity extends AppCompatActivity {
         if(intent!=null) {
             lat = intent.getStringExtra("StrLat");
             lng = intent.getStringExtra("StrLng");
-            txtLatlng.setText("Lat: "+lat+" Lng: "+lng);
+            txtLatlng.setText("Lat: "+lat+"\nLng: "+lng);
         }
 
 
         btnAccessSubmit = findViewById(R.id.btnAccessSubmit);
 
-        btnlogout = findViewById(R.id.btnlogout);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseAuth.signOut();
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
-            }
-        });
         txtLatlng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +73,14 @@ public class HeadActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         btnAccessSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +112,7 @@ public class HeadActivity extends AppCompatActivity {
                                     String Profile = "";
                                     /*String Foods = "";*/
                                     LatLngModelClass latLngModelClass;
-                                    latLngModelClass = new LatLngModelClass(Double.parseDouble(lat),Double.parseDouble(lng));
+                                    latLngModelClass = new LatLngModelClass(String.valueOf(lat),String.valueOf(lng));
                                     RestaurantModelClass restaurantModelClass = new RestaurantModelClass(Name, UserPhoneNumber, Address, access, Profile);
                                     AdmindatabaseReference.child(StringCountryCode+StringPhoneNumber).setValue(restaurantModelClass);
                                     AdmindatabaseReference.child(StringCountryCode+StringPhoneNumber).child("LatLng").setValue(latLngModelClass);
@@ -123,7 +120,7 @@ public class HeadActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-                                    Toast.makeText(HeadActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(HeadAccessChangingActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -136,7 +133,7 @@ public class HeadActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(HeadActivity.this, "Error: "+error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HeadAccessChangingActivity.this, "Error: "+error, Toast.LENGTH_SHORT).show();
 
                     }
                 });
